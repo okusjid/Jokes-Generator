@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Joke App{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'joke/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Joke App!</h1>
+        <nav>
+            {% if user.is_authenticated %}
+            <button onclick="window.location.href='{% url 'logout' %}'">Logout</button>
+          
+            {% elif request.resolver_match.url_name == 'login' %}
+            <button onclick="window.location.href='{% url 'register' %}'">Register</button>
+              
+            {% elif request.resolver_match.url_name == 'register' %}
+            <button onclick="window.location.href='{% url 'login' %}'">Login</button>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <!-- Dynamic content will be placed here -->
+        {% endblock content %}
+    </main>
+    <footer>
+        <p>© 2024 Joke App. All rights reserved.</p>
+    </footer>
+</body>
+</html>
